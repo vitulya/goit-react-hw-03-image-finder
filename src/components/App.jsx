@@ -6,8 +6,7 @@ import { Searchbar } from './Searchbar/Searchbar.jsx';
 import { ImageGallery } from './ImageGallery/ImageGallery.jsx';
 import { Button } from './Button/Button.jsx';
 import { Modal } from './Modal/Modal.jsx';
-
-import { Circles } from 'react-loader-spinner';
+import { Loader } from './Loader/Loader';
 
 export class App extends Component {
   state = {
@@ -107,20 +106,7 @@ export class App extends Component {
           images={this.state.images}
           isLoading={isLoading}
         />
-        {isLoading && (
-          <Circles
-            height="80"
-            width="80"
-            color="#4fa94d"
-            ariaLabel="circles-loading"
-            wrapperStyle={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-            wrapperClass=""
-            visible={true}
-          />
-        )}
+        {isLoading && <Loader />}
         {error && <h1>Спробуйте перезагрузити сторінку...</h1>}
         {images && <Button onClick={this.handleChangePage} />}
         {this.state.isOpenModal && (

@@ -1,15 +1,15 @@
 import { Component } from 'react';
 import css from './Modal.module.css';
+import PropTypes from 'prop-types';
 
 export class Modal extends Component {
-
-  componentDidMount(){
-    window.addEventListener('keydown', this.handleEscPress)
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleEscPress);
   }
 
-componentWillUnmount(){
-  window.removeEventListener('keydown', this.handleEscPress)
-}
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleEscPress);
+  }
 
   handleBackdropClick = event => {
     if (event.currentTarget === event.target) {
@@ -17,11 +17,11 @@ componentWillUnmount(){
     }
   };
 
-  handleEscPress=(event)=>{
-    if(event.key==='Escape'){
+  handleEscPress = event => {
+    if (event.key === 'Escape') {
       this.props.onCloseModal();
     }
-  }
+  };
 
   render() {
     return (
@@ -36,3 +36,9 @@ componentWillUnmount(){
     );
   }
 }
+
+Modal.propTypes = {
+  image: PropTypes.shape({
+    largeImageURL: PropTypes.string.isRequired,
+  }),
+};

@@ -1,8 +1,7 @@
 import css from './ImageGalleryItem.module.css';
+import PropTypes from 'prop-types';
 
 export const ImageGalleryItem = ({ images, onOpenModal }) => {
-  console.log(images);
-
   return (
     <>
       {images?.map(image => {
@@ -19,4 +18,13 @@ export const ImageGalleryItem = ({ images, onOpenModal }) => {
       })}
     </>
   );
+};
+
+ImageGalleryItem.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+    })
+  ),
 };

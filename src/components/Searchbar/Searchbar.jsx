@@ -2,8 +2,6 @@ import { Component } from 'react';
 import css from './Searchbar.module.css';
 
 export class Searchbar extends Component {
-
-
   render() {
     return (
       <header className={css.Searchbar}>

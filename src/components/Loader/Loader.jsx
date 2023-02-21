@@ -1,5 +1,18 @@
-// export const Loader=()=>{
-//     return(
+import { Circles } from 'react-loader-spinner';
 
-//     )
-// }
+export const Loader = () => {
+  return (
+    <Circles
+      height="80"
+      width="80"
+      color="#4fa94d"
+      ariaLabel="circles-loading"
+      wrapperStyle={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+      wrapperClass=""
+      visible={true}
+    />
+  );
+};
