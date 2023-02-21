@@ -13,28 +13,27 @@ export class App extends Component {
   state = {
     images: null,
     page: 1,
+    value: '',
+    submitValue: '',
   };
 
-  async componentDidMount() {
-    try {
-      const images = await getImages();
-      this.setState({
-        images: images.hits,
-      }); 
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  // async componentDidMount() {
+  //   try {
+  //     const images = await getImages();
+  //     this.setState({
+  //       images: images.hits,
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // }
 
   async componentDidUpdate(_, prevState) {
-    const { page } = this.state;
+    const { page, value, submitValue } = this.state;
 
-    if (prevState.page !== this.state.page) {
+    if (prevState.page !== page) {
       try {
-        const images = await getImages(page);
-        // this.setState({
-        //   images: images,
-        // });
+        const images = await getImages(page, value);
         this.setState(prev => ({
           images: [...prev.images, ...images.hits],
         }));
@@ -42,21 +41,43 @@ export class App extends Component {
         console.log(error.message);
       }
     }
-  }
 
-  handleSumbit = e => {
-    e.preventDefault();
-    console.log('Hallo');
-  };
+    if (prevState.submitValue !== submitValue) {
+      try {
+        const images = await getImages(page, value);
+        this.setState({
+          page: 1,
+          images: images.hits,
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  }
 
   handleChangePage = () => {
     this.setState(prev => ({ page: prev.page + 1 }));
   };
 
+  handleChangeValue=(e)=>{
+    const {value}=e.target;
+
+    this.setState({
+      value
+    })
+  }
+
+  handleSubmitInputValue = e => {
+    e.preventDefault();
+    this.setState({
+      submitValue: this.state.value,
+    });
+  };
+
   render() {
     return (
       <div className={css.App}>
-        <Searchbar onSubmit={this.handleSumbit} />
+        <Searchbar handleChangeValue={this.handleChangeValue} onSubmit={this.handleSubmitInputValue} />
         <ImageGallery images={this.state.images} />
         <Button onClick={this.handleChangePage} />
       </div>
