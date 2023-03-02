@@ -18,6 +18,7 @@ export class App extends Component {
     currentImage: null,
     isLoading: false,
     error: null,
+    totalHits: null,
   };
 
   async componentDidUpdate(_, prevState) {
@@ -49,9 +50,11 @@ export class App extends Component {
       });
       try {
         const images = await getImages(page, value);
+        console.log(images);
         this.setState({
           page: 1,
           images: images.hits,
+          totalHits: images.totalHits,
         });
       } catch (error) {
         this.setState({
@@ -92,8 +95,8 @@ export class App extends Component {
   };
 
   render() {
-    const { currentImage, isLoading, error, images } = this.state;
-
+    const { currentImage, isLoading, error, images, totalHits, page } =
+      this.state;
     return (
       <div className={css.App}>
         <Searchbar
@@ -108,7 +111,9 @@ export class App extends Component {
         />
         {isLoading && <Loader />}
         {error && <h1>Спробуйте перезагрузити сторінку...</h1>}
-        {images && <Button onClick={this.handleChangePage} />}
+        {images && totalHits > page * 12 && (
+          <Button onClick={this.handleChangePage} />
+        )}
         {this.state.isOpenModal && (
           <Modal onCloseModal={this.handleToggleModal} image={currentImage} />
         )}
